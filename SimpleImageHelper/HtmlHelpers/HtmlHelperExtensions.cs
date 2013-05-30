@@ -13,8 +13,12 @@ namespace SimpleImageHelper.HtmlHelpers
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
             var url = urlHelper.Action("Image", "Image", new { image });
 
-            var imageString = String.Format("<img src='{0}' alt='{1}'/>", url, alternative);
-            return MvcHtmlString.Create(imageString);
+            var builder = new TagBuilder("img");
+
+            builder.MergeAttribute("src", url);
+            builder.MergeAttribute("alt", alternative);
+
+            return MvcHtmlString.Create(builder.ToString(TagRenderMode.SelfClosing));
         } 
     }
 }
